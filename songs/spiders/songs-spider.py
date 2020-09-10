@@ -1,33 +1,15 @@
 import scrapy
 # from scrapy.loader import ItemLoader
 from songs.items import SongsItem
+from songs.input import getsong, getsonglist
 import re
-import csv
 
-def getsong(songartist):
-    print('\n------RUNNING GETSONG')
-    # songname = input("Song title: ").strip()
-    # artistname = input("Song artist: ").strip()
-    songname = songartist[0]
-    artistname = songartist[1]
-    print(f"{songname} by {artistname}")
 
-    song = songname.lower().replace(' ','-')
-    artist = artistname.lower().capitalize().replace(' ','-')
-    print(artist+'-'+song)
-    return artist+'-'+song
-
-def getsonglist():
-    print('\n------RUNNING GETSONGLIST')
-    with open('inputsongs.csv',mode='r') as file:
-        allSongs = csv.reader(file)
-        allSongs = list(allSongs)
-    print(allSongs)
-    return allSongs
+## cd C:\Users\sophiajlm\Documents\DataScience_Projects\03_TopSongsWords\songs
+## to run in cmd: scrapy crawl get-lyrics -o outfilename.csv
 
 class Songs(scrapy.Spider):
     name = "get-lyrics"
-    ## to run in cmd: scrapy crawl get-lyrics -o filename.csv
     # allowed_domains = ["https://genius.com/"]
     songlist = getsonglist()
     artistsong = getsong(songlist[0])
@@ -55,7 +37,7 @@ class Songs(scrapy.Spider):
 
         for i,lyrs in enumerate(lyrics):
             lyrics[i] = lyrics[i].strip()
-            lyrics[i] = re.sub(r'\[.*?\]\ *','',lyrics[i])
+            # lyrics[i] = re.sub(r'\[.*?\]\ *','',lyrics[i])
         lyrics = [lyr for lyr in lyrics if lyr]
 
         full_lyrics = ' '.join(lyrics)
