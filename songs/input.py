@@ -16,9 +16,14 @@ def getsong(songartist):
 def getsonglist():
     print('\n------RUNNING GETSONGLIST')
     inputfilename = 'C:/Users/sophiajlm/Documents/DataScience_Projects/03_TopSongsWords/inputsongs.csv'
-    inputfilename = 'C:/Users/sophiajlm/Documents/DataScience_Projects/03_TopSongsWords/inputsongserrors.csv' 
+    # inputfilename = 'C:/Users/sophiajlm/Documents/DataScience_Projects/03_TopSongsWords/inputsongserrors.csv'
     with open(inputfilename,mode='r') as file:
         allSongs = csv.reader(file)
         allSongs = list(allSongs)
+    dicSongs = {}
+    for song in allSongs:
+        dicSongs[getsong(song)] = song
     print(allSongs)
-    return allSongs
+    print(dicSongs)
+    # return allSongs
+    return dicSongs
