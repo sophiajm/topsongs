@@ -29,7 +29,8 @@ def getlyrics():
     # print(onlylyrics)
 
     onlylyricscleaned = resub(r'[^a-zA-z\' ]+','',onlylyrics)
-    lyricscounter = Counter(onlylyricscleaned.split())
+    onlylyricscleaned = [ly.lower() for ly in onlylyricscleaned.split()]
+    lyricscounter = Counter(onlylyricscleaned)
     # print(lyricscounter)
     for key in lyricscounter.keys():
         lyricscount.append([key, lyricscounter[key]])
