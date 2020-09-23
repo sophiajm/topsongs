@@ -11,4 +11,14 @@ class SongsItem(scrapy.Item):
     title = scrapy.Field()
     artist = scrapy.Field()
     lyric = scrapy.Field()
+    language = scrapy.Field()
+    songlink = scrapy.Field()
+    pass
+
+class ErrorItem(scrapy.Item):
+    title = scrapy.Field()
+    artist = scrapy.Field()
+    lyric = scrapy.Field()
+    language = scrapy.Field()
+    songlink = scrapy.Field()
     pass

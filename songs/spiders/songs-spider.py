@@ -33,14 +33,14 @@ class Songs(scrapy.Spider):
 
             item = ErrorItem()
             item['title'] = response.url[19:]
-            item['artist'] = response.url
+            item['artist'] = response.url[19:]
             item['lyric'] = "ERROR COULD NOT FIND LYRICS"
             item['language'] = self.songdic[response.url[19:-7]][2]
-
+            item['songlink'] = response.url
             yield item
 
         else:
-            lyrics = response.css("div.lyrics > p::text").getall()
+            lyrics = response.css("div.lyrics > p > a::text").getall() + response.css("div.lyrics > p::text").getall()
             for i,lyrs in enumerate(lyrics):
                 lyrics[i] = lyrics[i].strip()
                 # lyrics[i] = re.sub(r'\[.*?\]\ *','',lyrics[i])
@@ -53,6 +53,7 @@ class Songs(scrapy.Spider):
             item['artist'] = response.css("div.header_with_cover_art-primary_info > h2 > a::text").extract()[0].strip()
             item['lyric'] = full_lyrics
             item['language'] = self.songdic[response.url[19:-7]][2]
+            item['songlink'] = response.url
 
             yield item
 
