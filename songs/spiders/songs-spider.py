@@ -10,7 +10,6 @@ class Songs(scrapy.Spider):
     songdic = getsonglist()
     songlist = list(songdic.keys())
     artistsong = songlist[0]
-
     songurl = "https://genius.com/"+artistsong+"-lyrics"
 
     start_urls = [songurl]
