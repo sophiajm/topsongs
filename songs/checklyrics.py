@@ -17,6 +17,8 @@ def getlyrics():
     missinglyrics = []
     lyricscount = []
     onlylyrics = ''
+    words = []
+    wordscount = []
 
     for song in all:
         song[2] = resub(r'\[.*?\]\ *','',song[2])
@@ -26,20 +28,30 @@ def getlyrics():
         elif song[1]=="English":
             englishfiltered.append(song)
             onlylyrics += " "+song[2]
+            words += list(set(song[2].split()))
     # print(onlylyrics)
-
+    # print(words)
     onlylyricscleaned = resub(r'[^a-zA-z\' ]+','',onlylyrics)
     onlylyricscleaned = [ly.lower() for ly in onlylyricscleaned.split()]
+    wordscleaned = [resub(r'[^a-zA-z\' ]+','',wor) for wor in words]
+    wordscleaned = [w.lower() for w in wordscleaned]
+
     lyricscounter = Counter(onlylyricscleaned)
+    wordscounter = Counter(wordscleaned)
     # print(lyricscounter)
+    print(wordscounter)
+    #
     for key in lyricscounter.keys():
         lyricscount.append([key, lyricscounter[key]])
-    # print(lyricscount)
-    print(len(onlylyrics.split()))
-    onlylyrics = [onlylyrics]
-    print(sum([a[1] for a in lyricscount]))
+    for kw in wordscounter.keys():
+        wordscount.append([kw, wordscounter[kw]])
 
-    print(onlylyrics)
+    # print(lyricscount)
+    # print(len(onlylyrics.split()))
+    onlylyrics = [onlylyrics]
+    # print(sum([a[1] for a in lyricscount]))
+
+    # print(onlylyrics)
 
     # if english and not "ERROR COULD NOT FIND LYRICS" then write to the english-filtered.csv file
     # if "ERROR COULD NOT FIND LYRICS" then write to the missing-lyrics.csv file
@@ -48,6 +60,7 @@ def getlyrics():
     outputfilename2 = "missing-lyrics04.csv"
     outputfilename3 = "onlylyrics_ef04.csv"
     outputfilename4 = "lyricscount_ef04.csv"
+    outputfilename5 = "wordscount_ef04.csv"
     with open(outputfilename1, mode='w',encoding='utf8',newline='') as englishfilteredfile:
         songwriter = csv.writer(englishfilteredfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for s in englishfiltered:
@@ -64,5 +77,9 @@ def getlyrics():
         countwriter = csv.writer(lyricscountfile, delimiter=',', quoting=csv.QUOTE_ALL)
         for c in lyricscount:
             countwriter.writerow(c)
+    with open(outputfilename5, mode='w',encoding='utf8',newline='') as wordscountfile:
+        wordwriter = csv.writer(wordscountfile, delimiter=',', quoting=csv.QUOTE_ALL)
+        for w in wordscount:
+            wordwriter.writerow(w)
 
 getlyrics()
