@@ -25,7 +25,7 @@ def getlyrics():
             missinglyrics.append([song[3],song[1]])
         elif song[1]=="English":
             englishfiltered.append(song)
-            onlylyrics += song[2]
+            onlylyrics += " "+song[2]
     # print(onlylyrics)
 
     onlylyricscleaned = resub(r'[^a-zA-z\' ]+','',onlylyrics)
@@ -39,15 +39,15 @@ def getlyrics():
     onlylyrics = [onlylyrics]
     print(sum([a[1] for a in lyricscount]))
 
-    # print(onlylyrics)
+    print(onlylyrics)
 
     # if english and not "ERROR COULD NOT FIND LYRICS" then write to the english-filtered.csv file
     # if "ERROR COULD NOT FIND LYRICS" then write to the missing-lyrics.csv file
 
-    outputfilename1 = "english-filtered03.csv"
-    outputfilename2 = "missing-lyrics03.csv"
-    outputfilename3 = "onlylyrics_ef03.csv"
-    outputfilename4 = "lyricscount_ef03.csv"
+    outputfilename1 = "english-filtered04.csv"
+    outputfilename2 = "missing-lyrics04.csv"
+    outputfilename3 = "onlylyrics_ef04.csv"
+    outputfilename4 = "lyricscount_ef04.csv"
     with open(outputfilename1, mode='w',encoding='utf8',newline='') as englishfilteredfile:
         songwriter = csv.writer(englishfilteredfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for s in englishfiltered:
